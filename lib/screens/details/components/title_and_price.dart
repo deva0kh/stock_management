@@ -26,7 +26,7 @@ class TitleAndPrice extends StatelessWidget {
                   text: "$title\n",
                   style: Theme.of(context)
                       .textTheme
-                      .headline
+                      .headline5
                       .copyWith(color: kTextColor, fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
@@ -45,7 +45,7 @@ class TitleAndPrice extends StatelessWidget {
             "\$$price",
             style: Theme.of(context)
                 .textTheme
-                .headline
+                .headline5
                 .copyWith(color: kPrimaryColor),
           )
         ],
