@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../../constants.dart';
+import 'package:stock_managements/management_dao.dart';
+import 'dart:async';
+import 'package:stock_managements/constants.dart';
 
 class TitleWithMoreBtn extends StatelessWidget {
+
   const TitleWithMoreBtn({
     Key key,
     this.title,
@@ -10,7 +12,6 @@ class TitleWithMoreBtn extends StatelessWidget {
   }) : super(key: key);
   final String title;
   final Function press;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,7 +25,9 @@ class TitleWithMoreBtn extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             color: kPrimaryColor,
-            onPressed: press,
+            onPressed: ()  {
+              insert();
+            },
             child: Text(
               "lolo",
               style: TextStyle(color: Colors.white),
@@ -33,7 +36,15 @@ class TitleWithMoreBtn extends StatelessWidget {
         ],
       ),
     );
+
   }
+
+}
+void insert() async{
+  ManagementDao dbHelper=new ManagementDao();
+  dbHelper.createDatabase();
+  // dbHelper./
+  dbHelper.insert();
 }
 
 class TitleWithCustomUnderline extends StatelessWidget {
