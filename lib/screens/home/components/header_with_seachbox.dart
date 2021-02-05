@@ -27,7 +27,7 @@ class HeaderWithSearchBox extends StatelessWidget {
             ),
             height: size.height * 0.2 - 27,
             decoration: BoxDecoration(
-              color: kPrimaryColor,
+              color: Colors.lightBlue.withOpacity(0.7),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(36),
                 bottomRight: Radius.circular(36),
@@ -36,12 +36,12 @@ class HeaderWithSearchBox extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  'Hi Uishopy!',
+                  'Hi Achraf!',
                   style: Theme.of(context).textTheme.headline5.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
-                Image.asset("assets/images/logo.png")
+
               ],
             ),
           ),
@@ -73,7 +73,7 @@ class HeaderWithSearchBox extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: "Search",
                         hintStyle: TextStyle(
-                          color: kPrimaryColor.withOpacity(0.5),
+                          color: Colors.lightBlue.withOpacity(0.5),
                         ),
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
@@ -83,7 +83,8 @@ class HeaderWithSearchBox extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SvgPicture.asset("assets/icons/search.svg"),
+                  SvgPicture.asset("assets/icons/search.svg",color:  Colors.lightBlue.withOpacity(0.5),
+                  ),
                 ],
               ),
             ),

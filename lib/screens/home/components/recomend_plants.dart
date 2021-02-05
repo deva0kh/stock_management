@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock_managements/management_dao.dart';
 import 'package:stock_managements/screens/details/details_screen.dart';
 
 import '../../../constants.dart';
@@ -14,41 +15,49 @@ class RecomendsPlants extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: <Widget>[
-          RecomendPlantCard(
-            image: "assets/images/image_1.png",
-            title: "Samantha",
-            country: "Russia",
-            price: 440,
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailsScreen(),
-                ),
-              );
-            },
+          FutureBuilder(
+      future: (new ManagementDao()).getAll(),
+    // ignore: missing_return
+    builder: (BuildContext coontext,AsyncSnapshot snapshot){
+    var data = snapshot.data;
+    switch (snapshot.connectionState) {
+    case ConnectionState.none:
+    return new Text('Input a URL to start');
+    case ConnectionState.waiting:
+    return new Center(child: new CircularProgressIndicator());
+    case ConnectionState.active:
+    return new Text('');
+    case ConnectionState.done:
+    if (snapshot.hasError) {
+    return new Text(
+    'no connection to the internet',
+    style: TextStyle(color: Colors.red),
+    );
+    } else {
+        print(data[0].id);
+          List<Widget> list = new List<Widget>();
+          for(var record in data){
+            list.add(
+              RecomendPlantCard(
+                image:"assets/images/"+record.image,
+                title: record.name,
+                country: 'Morocco',
+                price: record.price,
+                press: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsScreen(record.id),
+                    ),
+                  );
+                },
+              )
+            );
+          }
+             return new Row(children: list);
+      }}}
           ),
-          RecomendPlantCard(
-            image: "assets/images/image_2.png",
-            title: "Angelica",
-            country: "Russia",
-            price: 440,
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailsScreen(),
-                ),
-              );
-            },
-          ),
-          RecomendPlantCard(
-            image: "assets/images/image_3.png",
-            title: "Samantha",
-            country: "Russia",
-            price: 440,
-            press: () {},
-          ),
+
         ],
       ),
     );
@@ -66,7 +75,7 @@ class RecomendPlantCard extends StatelessWidget {
   }) : super(key: key);
 
   final String image, title, country;
-  final int price;
+  final double price;
   final Function press;
 
   @override
@@ -119,7 +128,7 @@ class RecomendPlantCard extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    '\$$price',
+                    '\DH $price',
                     style: Theme.of(context)
                         .textTheme
                         .button

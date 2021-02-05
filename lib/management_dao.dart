@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:stock_managements/module/product.dart';
 
 class ManagementDao {
 
@@ -16,22 +17,50 @@ class ManagementDao {
   }
 
   void populateDb(Database database, int version) async {
+    await database.execute("drop table Product");
     await database.execute("CREATE TABLE IF NOT EXISTS Product ("
-        "id INTEGER PRIMARY KEY,"
+        "id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,"
         "name TEXT,"
         "price FLOAT,"
+        "image TEXT,"
         "quantity INTEGER"
         ")");
   }
 
       Future<int> insert() async {
         var database=await openDatabase('stock_management.db');
-        var result = await database.rawInsert(
-            "INSERT INTO Product (id,name, price, quantity)"
-                " VALUES (1,'NEW',52,2)");
+
+        //
+        // var result = await database.rawInsert(
+        //     "INSERT INTO Product (name, price, quantity,image)"
+        //         " VALUES ('R1',800,33,'R1.jpeg')");
         database.close();
-        return result;
+        return null;
       }
+
+  Future<List<Map<String, dynamic>>> queryAllRows(String table) async {
+    var database=await openDatabase('stock_management.db');
+      return await database.query(table);
+    }
+    void getAldl() async{
+      var database=await openDatabase('stock_management.db');
+      var records= await database.query("Product");
+
+      List<Product> list =
+      records.isNotEmpty ? records.map((c) => Product.fromMap(c)).toList() : [];
+
+      print(list);
+
+    }
+
+    getAll() async{
+      var database=await openDatabase('stock_management.db');
+      var records= await database.query("Product");
+
+      List<Product> list =
+      records.isNotEmpty ? records.map((c) => Product.fromMap(c)).toList() : [];
+      return list;
+    }
 //
   // static final _databaseName = "stock_management.db";
   // static final _databaseVersion = 1;

@@ -42,9 +42,8 @@ class TitleWithMoreBtn extends StatelessWidget {
 }
 void insert() async{
   ManagementDao dbHelper=new ManagementDao();
-  dbHelper.createDatabase();
-  // dbHelper./
-  dbHelper.insert();
+ dbHelper.createDatabase();
+ dbHelper.insert();
 }
 
 class TitleWithCustomUnderline extends StatelessWidget {
@@ -75,7 +74,7 @@ class TitleWithCustomUnderline extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(right: kDefaultPadding / 4),
               height: 7,
-              color: kPrimaryColor.withOpacity(0.2),
+              color: Colors.lightBlue.withOpacity(0.2),
             ),
           )
         ],
