@@ -42,8 +42,9 @@ class TitleWithMoreBtn extends StatelessWidget {
 }
 void insert() async{
   ManagementDao dbHelper=new ManagementDao();
- dbHelper.createDatabase();
- dbHelper.insert();
+ // dbHelper.createDatabase();
+ // dbHelper.insert();
+  dbHelper.getProduct(3);
 }
 
 class TitleWithCustomUnderline extends StatelessWidget {

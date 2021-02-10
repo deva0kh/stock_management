@@ -30,13 +30,29 @@ class ManagementDao {
       Future<int> insert() async {
         var database=await openDatabase('stock_management.db');
 
-        //
+
         // var result = await database.rawInsert(
         //     "INSERT INTO Product (name, price, quantity,image)"
-        //         " VALUES ('R1',800,33,'R1.jpeg')");
+        //         " VALUES ('Vans f11',700,11,'vans.jpg')");
         database.close();
         return null;
       }
+
+  Future<Product> getProduct(int id) async {
+    var database=await openDatabase('stock_management.db');
+    List<Map> results = await database.query("Product",
+        columns: ["id", "name", "price","quantity", "image"],
+        where: 'id = ?',
+        whereArgs: [id]);
+
+    if (results.length > 0) {
+    print(results);
+      return new Product.fromMap(results.first);
+    }
+
+
+    return null;
+  }
 
   Future<List<Map<String, dynamic>>> queryAllRows(String table) async {
     var database=await openDatabase('stock_management.db');
@@ -49,9 +65,10 @@ class ManagementDao {
       List<Product> list =
       records.isNotEmpty ? records.map((c) => Product.fromMap(c)).toList() : [];
 
-      print(list);
+
 
     }
+
 
     getAll() async{
       var database=await openDatabase('stock_management.db');
@@ -61,6 +78,13 @@ class ManagementDao {
       records.isNotEmpty ? records.map((c) => Product.fromMap(c)).toList() : [];
       return list;
     }
+
+  Future<int> updatePQty(int id) async {
+    var database=await openDatabase('stock_management.db');
+    return await database.rawUpdate(
+        'UPDATE Product SET quantity = quantity-1 WHERE id = $id'
+    );
+  }
 //
   // static final _databaseName = "stock_management.db";
   // static final _databaseVersion = 1;

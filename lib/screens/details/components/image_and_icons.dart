@@ -8,9 +8,13 @@ class ImageAndIcons extends StatelessWidget {
   const ImageAndIcons({
     Key key,
     @required this.size,
+    this.recordId,
+    @required this.image,
   }) : super(key: key);
 
   final Size size;
+  final int recordId;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +45,13 @@ class ImageAndIcons extends StatelessWidget {
                     IconCard(icon: "assets/icons/sun.svg"),
                     IconCard(icon: "assets/icons/icon_2.svg"),
                     IconCard(icon: "assets/icons/icon_3.svg"),
-                    IconCard(icon: "assets/icons/icon_4.svg"),
+
                   ],
                 ),
               ),
             ),
             Container(
-              height: size.height * 0.8,
+              height: size.height ,
               width: size.width * 0.75,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -58,13 +62,13 @@ class ImageAndIcons extends StatelessWidget {
                   BoxShadow(
                     offset: Offset(0, 10),
                     blurRadius: 60,
-                    color: kPrimaryColor.withOpacity(0.29),
+                    color: Colors.lightBlue.withOpacity(0.29),
                   ),
                 ],
                 image: DecorationImage(
                   alignment: Alignment.centerLeft,
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/images/img.png"),
+                  fit: BoxFit.fill,
+                  image: AssetImage("assets/images/"+image),
                 ),
               ),
             ),

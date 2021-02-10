@@ -87,10 +87,10 @@ class RecomendPlantCard extends StatelessWidget {
         top: kDefaultPadding / 2,
         bottom: kDefaultPadding * 2.5,
       ),
-      width: size.width * 0.4,
+      width: 200,
       child: Column(
         children: <Widget>[
-          Image.asset(image),
+          Image.asset(image,height: 150),
           GestureDetector(
             onTap: press,
             child: Container(

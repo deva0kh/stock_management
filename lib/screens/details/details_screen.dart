@@ -10,7 +10,7 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print(recordId);
     return Scaffold(
-      body: Body(),
+      body: Body(recordId),
     );
   }
 }
