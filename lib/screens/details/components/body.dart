@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stock_managements/constants.dart';
 import 'package:stock_managements/management_dao.dart';
+import 'package:stock_managements/screens/home/home_screen.dart';
 
 import 'image_and_icons.dart';
 import 'title_and_price.dart';
@@ -39,7 +40,7 @@ class Body extends StatelessWidget {
       return  Column(
         children: <Widget>[
           ImageAndIcons(size: size*0.9,recordId : recordId,image: data.image,),
-          TitleAndPrice(title: data.name, country: "Morocco", price: data.price),
+          TitleAndPrice(title: data.name, country: data.quantity.toString()+' Left', price: data.price),
           SizedBox(height: kDefaultPadding),
           Row(
             children: <Widget>[
@@ -92,13 +93,21 @@ class Body extends StatelessWidget {
       child: Text("Confirm"),
       onPressed:  () {
         (new ManagementDao()).updatePQty(id);
+
         Navigator.of(context).pop();
         Fluttertoast.showToast(
             msg: "Your Purchase is validated",
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2
         );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ),
+        );
+
       },
     );
     Widget cancelButton = FlatButton(
@@ -106,9 +115,9 @@ class Body extends StatelessWidget {
       onPressed:  () {
 
         Fluttertoast.showToast(
-            msg: "Your Purchase is validated",
+            msg: "Your Purchase is Canceled",
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
+            gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1
         );
         Navigator.of(context).pop();

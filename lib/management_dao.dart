@@ -1,11 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:stock_managements/module/plant.dart';
 import 'package:stock_managements/module/product.dart';
 
+
 class ManagementDao {
+
+  final String API_KEY = "P6UtEzK8O6k5wOCPe6_1BjuM0q0f1JtjWgEj0K6p3aM";
+  final String BASE_URL = "https://trefle.io/api/v1/species";
 
 
   createDatabase() async {
@@ -85,6 +91,31 @@ class ManagementDao {
         'UPDATE Product SET quantity = quantity-1 WHERE id = $id'
     );
   }
+
+  getSavePlanetData(int pageNumber,int pageSize) async {
+
+    final url = "${BASE_URL}?token=$API_KEY&page=$pageNumber&size=$pageSize";
+    final httpClient = new HttpClient();
+  print(url);
+    try {
+      var request = await httpClient.getUrl(Uri.parse(url));
+      var response = await request.close();
+
+      if (response.statusCode == HttpStatus.ok) {
+        var json = await utf8.decoder.bind(response).join();
+        var data = jsonDecode(json);
+
+        return Plant.fromMap(data); // We'll see it soon
+      } else {
+        print("Failed http call."); // Perhaps handle it somehow
+      }
+    } catch (exception) {
+      print(exception.toString());
+    }
+    return null;
+
+  }
+
 //
   // static final _databaseName = "stock_management.db";
   // static final _databaseVersion = 1;

@@ -1,28 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:stock_managements/cash/Cache.dart';
+import 'package:stock_managements/cash/MemCache.dart';
+import 'package:stock_managements/module/plant.dart';
+import 'package:stock_managements/repository/CashingRepository.dart';
 
 import '../../../constants.dart';
 
 class FeaturedPlants extends StatelessWidget {
+  static final Cache _cache = MemCache<Plant>();
+
+  static final _repo = CachingRepository(pageSize: 10, cache: _cache);
   const FeaturedPlants({
     Key key,
   }) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    _repo.getPlant(0).asStream();
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        children: <Widget>[
-          FeaturePlantCard(
-            image: "assets/images/bottom_img_1.png",
-            press: () {},
-          ),
-          FeaturePlantCard(
-            image: "assets/images/bottom_img_2.png",
-            press: () {},
-          ),
-        ],
+      child: Container(
+        child: Row(
+          children: <Widget>[
+            _buildProductRow(_repo.getPlant(0)),
+            FeaturePlantCard(
+              image: "assets/images/bottom_img_1.png",
+              press: () {},
+            ),
+
+          ],
+        ),
       ),
+    );
+  }
+  Widget _buildProductRow(Future<Plant> plantFuture) {
+    return new FutureBuilder<Plant>(
+      future: plantFuture,
+      builder: (BuildContext context, AsyncSnapshot<Plant> snapshot) {
+        if (snapshot.hasData) {
+          print(snapshot);
+          return new FeaturePlantCard(
+            image: snapshot.data.image,
+          );
+        } else {
+          return new LinearProgressIndicator();
+        }
+      },
     );
   }
 }
@@ -59,4 +83,7 @@ class FeaturePlantCard extends StatelessWidget {
       ),
     );
   }
+
+
+
 }
