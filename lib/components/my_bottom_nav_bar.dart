@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stock_managements/screens/add/add_product.dart';
+import 'package:stock_managements/screens/home/home_screen.dart';
 
 import '../constants.dart';
 
@@ -31,16 +33,33 @@ class MyBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
-            icon: SvgPicture.asset("assets/icons/flower.svg"),
-            onPressed: () {},
+            icon: SvgPicture.asset("assets/icons/flower.svg",color: Colors.lightBlue,),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ),
+              );
+
+            },
           ),
           IconButton(
             icon: SvgPicture.asset("assets/icons/heart-icon.svg"),
-            onPressed: () {},
+            onPressed: () {
+
+            },
           ),
           IconButton(
-            icon: SvgPicture.asset("assets/icons/user-icon.svg"),
-            onPressed: () {},
+            icon: SvgPicture.asset("assets/icons/more.svg"),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddProduct(),
+                ),
+              );
+            },
           ),
         ],
       ),
