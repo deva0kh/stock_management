@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stock_managements/cash/Cache.dart';
 import 'package:stock_managements/cash/MemCache.dart';
+import 'package:stock_managements/management_dao.dart';
 import 'package:stock_managements/module/plant.dart';
 import 'package:stock_managements/repository/CashingRepository.dart';
 
@@ -23,32 +24,85 @@ class FeaturedPlants extends StatelessWidget {
       child: Container(
         child: Row(
           children: <Widget>[
-            _buildProductRow(_repo.getPlant(0)),
-            FeaturePlantCard(
-              image: "assets/images/bottom_img_1.png",
-              press: () {},
-            ),
+
+
+            FutureBuilder(
+             future: (new ManagementDao()).getSavePlanetData(1, 1),
+              // ignore: missing_return
+              builder: (BuildContext coontext,AsyncSnapshot snapshot){
+              var data = snapshot.data;
+              switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              return new Text('Input a URL to start');
+              case ConnectionState.waiting:
+              return new Center(child: new CircularProgressIndicator());
+              case ConnectionState.active:
+              return new Text('');
+              case ConnectionState.done:
+              if (snapshot.hasError) {
+              return new Text(
+              'no connection to the internet',
+              style: TextStyle(color: Colors.red),
+              );
+              } else {
+                List<Widget> plantList = new List<Widget>();
+                for(var plant in data){
+                  plantList.add(
+                      FeaturePlantCard(
+                      image: plant.image,
+                      press: () {
+                        showAlertDialog(context,plant.name);
+                      },
+                    ),
+                  );
+                }
+
+            return new Row(children: plantList);
+    }
+    }
+             }
+            ),//*//
 
           ],
         ),
       ),
     );
   }
-  Widget _buildProductRow(Future<Plant> plantFuture) {
-    return new FutureBuilder<Plant>(
-      future: plantFuture,
-      builder: (BuildContext context, AsyncSnapshot<Plant> snapshot) {
-        if (snapshot.hasData) {
-          print(snapshot);
-          return new FeaturePlantCard(
-            image: snapshot.data.image,
-          );
-        } else {
-          return new LinearProgressIndicator();
-        }
+
+  showAlertDialog(BuildContext context,String name) {
+
+    // set up the button
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+
+
+        Navigator.of(context).pop();
+      },
+
+    );
+
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Info"),
+      content: Text("This plant is commanly known as : " + name),
+      actions: [
+
+        cancelButton,
+
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }
+
 }
 
 class FeaturePlantCard extends StatelessWidget {
@@ -77,7 +131,7 @@ class FeaturePlantCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(image),
+            image:  NetworkImage(image),
           ),
         ),
       ),

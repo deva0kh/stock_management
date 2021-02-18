@@ -21,11 +21,21 @@ class Plant {
     image: json["image_url"],
   );
 
+  factory Plant.fromJson(Map<String, dynamic> json) {
+    return Plant(
+        id: json["id"],
+        name: json["common_name"],
+        image: json["image_url"]);
+  }
   Map<String, dynamic> toMap() => {
     "id": id,
     "common_name": name,
     "image_url":image
   };
+
+
+
+
 }
 
 Plant plantFromJson(String str) {

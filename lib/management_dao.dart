@@ -95,17 +95,19 @@ class ManagementDao {
   getSavePlanetData(int pageNumber,int pageSize) async {
 
     final url = "${BASE_URL}?token=$API_KEY&page=$pageNumber&size=$pageSize";
-    final httpClient = new HttpClient();
+    List<Plant> list;
   print(url);
     try {
-      var request = await httpClient.getUrl(Uri.parse(url));
-      var response = await request.close();
 
+      var response = await  http.get(url);
       if (response.statusCode == HttpStatus.ok) {
-        var json = await utf8.decoder.bind(response).join();
-        var data = jsonDecode(json);
+        var data = json.decode(response.body);
 
-        return Plant.fromMap(data); // We'll see it soon
+        var rest = data["data"] as List;
+
+        list = rest.map<Plant>((json) => Plant.fromJson(json)).toList();
+        return list;
+
       } else {
         print("Failed http call."); // Perhaps handle it somehow
       }
