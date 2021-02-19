@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'custom_input.dart';
+import 'package:stock_managements/management_dao.dart';
+import 'package:stock_managements/screens/home/home_screen.dart';
+
 
 class AddProduct extends StatefulWidget {
 @override
@@ -107,7 +109,7 @@ class _AddProductState extends State<AddProduct> {
                               _url=value;
                               return null;
                             },
-                            keyboardType: TextInputType.number,
+
                             style: GoogleFonts.nunito(fontWeight: FontWeight.w600),
                             decoration: InputDecoration(
                               labelText: 'Image URL :',
@@ -153,7 +155,7 @@ class _AddProductState extends State<AddProduct> {
 
                                     if (value.isEmpty){
                                       return 'Ammount cannot be empty';
-                                    }else if( double.parse(value)<0){
+                                    }else if( double.parse(value)<1){
 
                                       return 'error';
                                     }
@@ -222,7 +224,14 @@ class _AddProductState extends State<AddProduct> {
                       onPressed: () async {
                         _supSolde=false;
                         if(_formkey.currentState.validate()){
+                         (new ManagementDao().insert(_name, _amount, _url, _quantity));
 
+                         Navigator.push(
+                           context,
+                           MaterialPageRoute(
+                             builder: (context) => HomeScreen(),
+                           ),
+                         );
 
                         }
 

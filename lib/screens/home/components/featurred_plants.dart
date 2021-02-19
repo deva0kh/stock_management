@@ -73,7 +73,7 @@ class FeaturedPlants extends StatelessWidget {
 
     // set up the button
     Widget cancelButton = FlatButton(
-      child: Text("Cancel"),
+      child: Text("OK"),
       onPressed:  () {
 
 

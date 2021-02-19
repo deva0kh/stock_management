@@ -42,9 +42,9 @@ class ImageAndIcons extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    IconCard(icon: "assets/icons/sun.svg"),
-                    IconCard(icon: "assets/icons/icon_2.svg"),
-                    IconCard(icon: "assets/icons/icon_3.svg"),
+                    IconCard(icon: "assets/icons/list.svg"),
+                    IconCard(icon: "assets/icons/eye.svg"),
+                    IconCard(icon: "assets/icons/bell.svg"),
 
                   ],
                 ),
@@ -68,7 +68,7 @@ class ImageAndIcons extends StatelessWidget {
                 image: DecorationImage(
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.fill,
-                  image: AssetImage("assets/images/"+image),
+                  image: NetworkImage(image),
                 ),
               ),
             ),

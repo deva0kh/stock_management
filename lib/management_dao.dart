@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
@@ -10,7 +11,7 @@ import 'package:stock_managements/module/product.dart';
 
 class ManagementDao {
 
-  final String API_KEY = "P6UtEzK8O6k5wOCPe6_1BjuM0q0f1JtjWgEj0K6p3aM";
+  final String API_KEY = "USE YOUR KEY";
   final String BASE_URL = "https://trefle.io/api/v1/species";
 
 
@@ -27,22 +28,24 @@ class ManagementDao {
     await database.execute("CREATE TABLE IF NOT EXISTS Product ("
         "id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,"
         "name TEXT,"
-        "price FLOAT,"
+        "price double,"
         "image TEXT,"
         "quantity INTEGER"
         ")");
   }
 
-      Future<int> insert() async {
+      Future<int> insert(String name,double price,String image,int qt) async {
         var database=await openDatabase('stock_management.db');
 
 
-        // var result = await database.rawInsert(
-        //     "INSERT INTO Product (name, price, quantity,image)"
-        //         " VALUES ('Vans f11',700,11,'vans.jpg')");
+        var result = await database.rawInsert(
+            "INSERT INTO Product (name, price, quantity,image)"
+                " VALUES ($name,$price,$qt,$image)");
         database.close();
-        return null;
+        return result;
       }
+
+
 
   Future<Product> getProduct(int id) async {
     var database=await openDatabase('stock_management.db');

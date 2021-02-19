@@ -39,7 +39,7 @@ class RecomendsPlants extends StatelessWidget {
           for(var record in data){
             list.add(
               RecomendPlantCard(
-                image:"assets/images/"+record.image,
+                image:record.image,
                 title: record.name,
                 country: 'Morocco',
                 price: record.price,
@@ -90,7 +90,7 @@ class RecomendPlantCard extends StatelessWidget {
       width: 200,
       child: Column(
         children: <Widget>[
-          Image.asset(image,height: 150),
+          Image.network(image,height: 150),
           GestureDetector(
             onTap: press,
             child: Container(

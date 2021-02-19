@@ -35,7 +35,7 @@ class IconCard extends StatelessWidget {
           ),
         ],
       ),
-      child: SvgPicture.asset(icon),
+      child: SvgPicture.asset(icon,color: Colors.blueGrey,),
     );
   }
 }
