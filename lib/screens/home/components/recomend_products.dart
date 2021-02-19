@@ -4,8 +4,8 @@ import 'package:stock_managements/screens/details/details_screen.dart';
 
 import '../../../constants.dart';
 
-class RecomendsPlants extends StatelessWidget {
-  const RecomendsPlants({
+class RecomendsProducts extends StatelessWidget {
+  const RecomendsProducts({
     Key key,
   }) : super(key: key);
 

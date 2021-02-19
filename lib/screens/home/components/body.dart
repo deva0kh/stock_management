@@ -3,7 +3,7 @@ import 'package:stock_managements/constants.dart';
 
 import 'featurred_plants.dart';
 import 'header_with_seachbox.dart';
-import 'recomend_plants.dart';
+import 'recomend_products.dart';
 import 'title_with_more_bbtn.dart';
 
 class Body extends StatelessWidget {
@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
         children: <Widget>[
           HeaderWithSearchBox(size: size),
           TitleWithMoreBtn(title: "Products", press: () {}),
-          RecomendsPlants(),
+          RecomendsProducts(),
           TitleWithMoreBtn(title: "Save The Planet", press: () {}),
           FeaturedPlants(),
           SizedBox(height: kDefaultPadding),
